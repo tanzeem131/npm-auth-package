@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { globalEmail } from "@/common/constants";
 import { ENDPOINTS } from "@/common/api.endpoints";
+import TextInput from "@/components/textInput/textInput";
+import Button from "@/components/button/authButton";
 
 export default function OTPPage() {
   const [email] = useState<string | null>(globalEmail);
@@ -11,8 +13,6 @@ export default function OTPPage() {
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-
-  console.log("email", email);
 
   const handleOtp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,41 +49,25 @@ export default function OTPPage() {
             </div>
             <form className="space-y-6" onSubmit={handleOtp}>
               <div className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="otp"
-                    className="block text-sm font-medium text-gray-300 mb-1"
-                  >
-                    OTP
-                  </label>
-                  <input
-                    id="otp"
-                    name="otp"
-                    type="text"
-                    autoComplete="one-time-code"
-                    required
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    className="w-full !px-4 !py-2 !bg-gray-700/20 !border !border-gray-400/10 !rounded-lg !text-[#edeef0] focus:outline-none"
-                    placeholder="Enter your OTP"
-                  />
-                </div>
+                <TextInput
+                  id="otp"
+                  name="otp"
+                  type="text"
+                  autoComplete="one-time-code"
+                  required={true}
+                  value={otp}
+                  placeholder="Enter your OTP"
+                  onChange={(e) => setOtp(e.target.value)}
+                  label="OTP"
+                />
               </div>
-              <div>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className={`w-full cursor-pointer flex justify-center !py-3 !px-4 !rounded-md font-semibold text-white transition-all duration-300 bg-blue-600 bg-gradient-to-r from-blue-600 to-blue-400 hover:shadow-lg hover:shadow-blue-600/30 ${
-                    isLoading ? "opacity-70 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {isLoading ? (
-                    <span className="flex items-center">Verifying OTP...</span>
-                  ) : (
-                    "Verify OTP"
-                  )}
-                </button>
-              </div>
+              <Button
+                isLoading={isLoading}
+                type="submit"
+                disabled={isLoading}
+                processingtext="Verifying OTP..."
+                btnname="Verify OTP"
+              />
             </form>
             {error && <p className="mt-2 text-red-600">{error}</p>}
           </div>

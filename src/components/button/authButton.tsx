@@ -4,22 +4,17 @@ type BtnInputProps = {
   isLoading: boolean;
   disabled: boolean;
   type?: "submit" | "reset" | "button";
-  name: string;
   btnname: string;
   processingtext: string;
-  autoComplete: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const TextInput: React.FC<BtnInputProps> = ({
+const Button: React.FC<BtnInputProps> = ({
   isLoading,
   type,
   disabled,
   processingtext,
   btnname,
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
-
   return (
     <div>
       <button
@@ -61,4 +56,4 @@ const TextInput: React.FC<BtnInputProps> = ({
   );
 };
 
-export default TextInput;
+export default Button;

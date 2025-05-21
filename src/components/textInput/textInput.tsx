@@ -3,13 +3,13 @@ import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 
 type TextInputProps = {
-  id: string;
+  id?: string;
   label: string;
   name: string;
   type?: string;
   placeholder?: string;
   value: string;
-  autoComplete: string;
+  autoComplete?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   showTogglePassword?: boolean;
@@ -76,10 +76,10 @@ const TextInput: React.FC<TextInputProps> = ({
         {showTogglePassword && isPasswordType && (
           <button
             type="button"
-            className="absolute right-3 text-gray-400 hover:text-gray-200"
+            className="absolute right-3 text-gray-400 hover:text-gray-200 hover:cursor-pointer"
             onClick={toggleShowPassword}
           >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {showPassword ? <EyeOff size={24} /> : <Eye size={24} />}
           </button>
         )}
       </div>

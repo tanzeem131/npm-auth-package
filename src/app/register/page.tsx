@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react";
 import { setGlobalEmail } from "@/common/constants";
 import { ENDPOINTS } from "@/common/api.endpoints";
+import TextInput from "@/components/textInput/textInput";
+import Button from "@/components/button/authButton";
 import Link from "next/link";
 
 export default function RegisterPage() {
@@ -12,14 +13,8 @@ export default function RegisterPage() {
   const [lastName, setLastName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const router = useRouter();
-
-  const toggleShowPassword = (e: React.FormEvent) => {
-    e.preventDefault();
-    setShowPassword(!showPassword);
-  };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +38,6 @@ export default function RegisterPage() {
         setIsLoading(false);
         router.push("/otp-page");
       } else {
-        alert(data.error || "Registration failed");
         setIsLoading(false);
         setError(data.error || "Registration failed");
       }
@@ -66,91 +60,49 @@ export default function RegisterPage() {
             </div>
             <form className="space-y-6" onSubmit={handleRegister}>
               <div className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-300 mb-1"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full !px-4 !py-2 !bg-gray-700/20 !border !border-gray-400/10 !rounded-lg !text-[#edeef0] focus:outline-none"
-                    placeholder="Enter First Name"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-300 mb-1"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="w-full !px-4 !py-2 !bg-gray-700/20 !border !border-gray-400/10 !rounded-lg !text-[#edeef0] focus:outline-none"
-                    placeholder="Enter Last Name"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-300 mb-1"
-                  >
-                    Email address
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full !px-4 !py-2 !bg-gray-700/20 !border !border-gray-400/10 !rounded-lg !text-[#edeef0] focus:outline-none"
-                    placeholder="john@example.com"
-                  />
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label
-                      htmlFor="password"
-                      className="block text-sm font-medium text-gray-300"
-                    >
-                      Password
-                    </label>
-                  </div>
-                  <div className="flex">
-                    <input
-                      id="password"
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      autoComplete="current-password"
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full !px-4 !py-2 !bg-gray-700/20 !border !border-gray-400/10 !rounded-lg !text-[#edeef0] focus:outline-none"
-                      placeholder="••••••••"
-                    />
-                    <button
-                      type="button"
-                      className="hover:cursor-pointer"
-                      onClick={toggleShowPassword}
-                    >
-                      {showPassword ? <EyeOff /> : <Eye />}
-                    </button>
-                  </div>
-                </div>
+                <TextInput
+                  id="name"
+                  name="name"
+                  type="text"
+                  required={true}
+                  value={firstName}
+                  placeholder="Enter First Name"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  label="First Name"
+                />
+                <TextInput
+                  id="name"
+                  name="name"
+                  type="text"
+                  required={true}
+                  value={lastName}
+                  placeholder="Enter Last Name"
+                  onChange={(e) => setLastName(e.target.value)}
+                  label="Last Name"
+                />
+                <TextInput
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required={true}
+                  value={email}
+                  placeholder="john@example.com"
+                  onChange={(e) => setEmail(e.target.value)}
+                  label="Email"
+                />
+                <TextInput
+                  id="password"
+                  label="Password"
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  showTogglePassword
+                />
               </div>
               <div>
                 <button
@@ -167,6 +119,13 @@ export default function RegisterPage() {
                   )}
                 </button>
               </div>
+              <Button
+                isLoading={isLoading}
+                type="submit"
+                disabled={isLoading}
+                processingtext="Signing up..."
+                btnname="Sign Up"
+              />
             </form>
             {error && <p className="mt-2 text-red-600">{error}</p>}
             <div className="mt-6 text-center">

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { setGlobalEmail } from "@/common/constants";
 import { ENDPOINTS } from "@/common/api.endpoints";
+import TextInput from "@/components/textInput/textInput";
+import Button from "@/components/button/authButton";
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState<string>("");
@@ -64,43 +66,25 @@ export default function ForgetPassword() {
                 </div>
                 <form className="space-y-6" onSubmit={handleForgetPassword}>
                   <div className="space-y-4">
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-gray-300 mb-1"
-                      >
-                        Email address
-                      </label>
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        autoComplete="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full !px-4 !py-2 !bg-gray-700/20 !border !border-gray-400/10 !rounded-lg !text-[#edeef0] focus:outline-none"
-                        placeholder="Enter your email to get link"
-                      />
-                    </div>
+                    <TextInput
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required={true}
+                      value={email}
+                      placeholder="john@example.com"
+                      onChange={(e) => setEmail(e.target.value)}
+                      label="Email"
+                    />
                   </div>
-                  <div>
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className={`w-full cursor-pointer flex justify-center !py-3 !px-4 !rounded-md font-semibold text-white transition-all duration-300 bg-blue-600 bg-gradient-to-r from-blue-600 to-blue-400 hover:shadow-lg hover:shadow-blue-600/30 ${
-                        isLoading ? "opacity-70 cursor-not-allowed" : ""
-                      }`}
-                    >
-                      {isLoading ? (
-                        <span className="flex items-center">
-                          Sending Link...
-                        </span>
-                      ) : (
-                        "Get Link"
-                      )}
-                    </button>
-                  </div>
+                  <Button
+                    isLoading={isLoading}
+                    type="submit"
+                    disabled={isLoading}
+                    processingtext="Sending Link..."
+                    btnname="Get Link"
+                  />
                 </form>
                 {error && <p className="mt-2 text-red-600">{error}</p>}
               </>

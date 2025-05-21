@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ENDPOINTS } from "@/common/api.endpoints";
-import { Eye, EyeOff } from "lucide-react";
 import TextInput from "@/components/textInput/textInput";
+import Button from "@/components/button/authButton";
 // import { useForm } from "react-hook-form";
 
 export default function Login() {
@@ -13,7 +13,6 @@ export default function Login() {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
 
   // const {
@@ -84,21 +83,13 @@ export default function Login() {
                   forgotPasswordLink="/forget-password"
                 />
               </div>
-              <div>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className={`w-full cursor-pointer flex justify-center !py-3 !px-4 !rounded-md font-semibold text-white transition-all duration-300 bg-blue-600 bg-gradient-to-r from-blue-600 to-blue-400 hover:shadow-lg hover:shadow-blue-600/30 ${
-                    isLoading ? "opacity-70 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {isLoading ? (
-                    <span className="flex items-center">Logging...</span>
-                  ) : (
-                    "Log in"
-                  )}
-                </button>
-              </div>
+              <Button
+                isLoading={isLoading}
+                type="submit"
+                disabled={isLoading}
+                processingtext="Logging..."
+                btnname="Log in"
+              />
             </form>
             {error && <p className="mt-2 text-red-600">{error}</p>}
 
