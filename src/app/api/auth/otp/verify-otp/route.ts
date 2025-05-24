@@ -18,10 +18,14 @@ export async function POST(req: NextRequest) {
     const otpRecord = await OTP.findOne({ email, otp });
 
     if (!otpRecord) {
-      return NextResponse.json({ error: "Invalid OTP" }, { status: 404 });
+      return NextResponse.json({ message: "Invalid OTP" }, { status: 404 });
     }
 
     const user = await User.findOne({ email });
+
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
 
     user.status = true;
 
@@ -35,7 +39,7 @@ export async function POST(req: NextRequest) {
     );
   } catch (error) {
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { message: "Something went wrong" },
       { status: 500 }
     );
   }

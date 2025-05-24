@@ -1,8 +1,8 @@
-import { ENDPOINTS } from "@/common/api.endpoints";
 // app/api/auth/login/route.ts
+import { ENDPOINTS } from "@/common/api.endpoints";
 import { NextRequest, NextResponse } from "next/server";
-import dbConnect from "../../../../lib/db";
-import { User } from "../../../../models/admin";
+import dbConnect from "@/lib/db";
+import { User } from "@/models/admin";
 import jwt from "jsonwebtoken";
 
 export async function POST(req: NextRequest) {
@@ -39,9 +39,12 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // Simply redirect to the OTP page
-      return NextResponse.redirect(
-        new URL(`/otp-page?email=${encodeURIComponent(user.email)}`, req.url)
+      return NextResponse.json(
+        {
+          status: "OTP_REQUIRED",
+          message: "Account not verified. OTP verification required.",
+        },
+        { status: 403 }
       );
     } catch (error) {
       return NextResponse.json(

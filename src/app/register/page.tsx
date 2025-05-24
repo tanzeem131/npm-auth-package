@@ -61,8 +61,8 @@ export default function RegisterPage() {
             <form className="space-y-6" onSubmit={handleRegister}>
               <div className="space-y-4">
                 <TextInput
-                  id="name"
-                  name="name"
+                  id="firstName"
+                  name="firstName"
                   type="text"
                   required={true}
                   value={firstName}
@@ -71,8 +71,8 @@ export default function RegisterPage() {
                   label="First Name"
                 />
                 <TextInput
-                  id="name"
-                  name="name"
+                  id="lastName"
+                  name="lastName"
                   type="text"
                   required={true}
                   value={lastName}
@@ -103,21 +103,6 @@ export default function RegisterPage() {
                   required
                   showTogglePassword
                 />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className={`w-full cursor-pointer flex justify-center !py-3 !px-4 !rounded-md font-semibold text-white transition-all duration-300 bg-blue-600 bg-gradient-to-r from-blue-600 to-blue-400 hover:shadow-lg hover:shadow-blue-600/30 ${
-                    isLoading ? "opacity-70 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {isLoading ? (
-                    <span className="flex items-center">Signing up...</span>
-                  ) : (
-                    "Sign Up"
-                  )}
-                </button>
               </div>
               <Button
                 isLoading={isLoading}

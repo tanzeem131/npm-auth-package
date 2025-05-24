@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-
-// import bcrypt from 'bcrypt';
 import disposableDomains from "disposable-email-domains";
 import { User } from "@/models/admin";
-import dbConnect from "../../../../lib/db";
+import dbConnect from "@/lib/db";
 
 export async function POST(req: NextRequest) {
   try {

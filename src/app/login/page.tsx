@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ENDPOINTS } from "@/common/api.endpoints";
 import TextInput from "@/components/textInput/textInput";
 import Button from "@/components/button/authButton";
+import { setGlobalEmail } from "@/common/constants";
 // import { useForm } from "react-hook-form";
 
 export default function Login() {
@@ -21,7 +22,7 @@ export default function Login() {
   //   formState: { errors },
   // } = useForm();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -31,16 +32,22 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
-      if (res.ok) {
+      if (res.status === 200) {
         localStorage.setItem("token", data.token);
         setIsLoading(false);
+        setError("Successfully requested!");
         router.push("/admin");
-      } else {
-        setIsLoading(false);
+      } else if (res.status === 403 && data.status === "OTP_REQUIRED") {
+        setGlobalEmail(email);
         setError(data.message);
+        setIsLoading(false);
+        router.push("/otp-page");
+      } else {
+        setError(data.message);
+        setIsLoading(false);
       }
     } catch (error) {
-      console.error(error);
+      setError("Request failed");
     }
   };
 
@@ -56,7 +63,7 @@ export default function Login() {
                 App with<span className="text-amber-600">Auth</span>
               </p>
             </div>
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleLogin}>
               <div className="space-y-4">
                 <TextInput
                   id="email"

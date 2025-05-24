@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     if (!email || !password || !token) {
       return NextResponse.json(
-        { error: "Password and Token are required" },
+        { message: "Password and Token are required" },
         { status: 404 }
       );
     }

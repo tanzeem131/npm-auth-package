@@ -71,9 +71,9 @@ export default function ResetPassword() {
                   required
                 />
                 <TextInput
-                  id="password"
+                  id="confirmPassword"
                   label="Confirm Password"
-                  name="password"
+                  name="confirmPassword"
                   type="password"
                   placeholder="••••••••"
                   autoComplete="current-password"

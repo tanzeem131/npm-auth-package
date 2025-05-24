@@ -21,12 +21,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
     const otp = generateSecureOTP();
-
-    // await OTP.deleteMany({ email });
-    // await OTP.create({ email, otp });
 
     const existingOTP = await OTP.findOne({ email });
 
